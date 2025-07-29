@@ -1,6 +1,9 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RegisterUserController;
 
-Route::post("/api/login", [AuthController::class, 'login']);
+Route::middleware(['auth:api', 'admin'])->post('/register', [RegisterUserController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+
