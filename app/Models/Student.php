@@ -14,6 +14,7 @@ class Student extends Model
         'phone',
         'email',
         'roll_num',
+        'class_grade',
         'dob',
         'admission_date',
         'status'
