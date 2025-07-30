@@ -6,6 +6,7 @@ use App\Models\Student;
 use App\Models\User;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -120,4 +121,24 @@ class StudentController extends Controller
         $student->user->delete();
         return response()->json(['message' => 'Student deleted']);
     }
+
+    public function getProfile()
+    {
+        $user = Auth::user();
+
+        if ($user->role !== 'student') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+
+        $student = Student::where('user_id', $user->id)
+            ->with(['user', 'teacher'])
+            ->first();
+
+        if (!$student) {
+            return response()->json(['message' => 'Student record not found'], 404);
+        }
+
+        return response()->json($student);
+    }
+
 }

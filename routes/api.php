@@ -31,3 +31,5 @@ Route::middleware('jwt.auth')->get('/teachers/{id}/students', function ($id) {
 
     return $teacher->students()->paginate(10);
 });
+
+Route::middleware('jwt.auth')->get('/student/profile', [StudentController::class, 'getProfile']);
