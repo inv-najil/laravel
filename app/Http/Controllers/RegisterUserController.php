@@ -16,7 +16,7 @@ class RegisterUserController extends Controller
     public function register(Request $request)
     {
 
-        //not solve partial creation 
+        //to solve partial creation 
         DB::beginTransaction();
 
         try {
