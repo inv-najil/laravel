@@ -65,4 +65,16 @@ class User extends Authenticatable implements JWTSubject
             'role' => $this->role
         ];
     }
+    
+    //User has one student
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+    
+    //User has one Techer
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
+    }
 }

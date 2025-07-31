@@ -12,6 +12,8 @@ class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * for endponit get /students
+     * Returns paginated list of students
      */
     public function index()
     {
@@ -21,6 +23,7 @@ class StudentController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * Not used for api
      */
     public function create()
     {
@@ -29,6 +32,8 @@ class StudentController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * for endpoint post /students to create student
+     * Returns created students json 
      */
     public function store(Request $request)
     {
@@ -72,15 +77,19 @@ class StudentController extends Controller
 
     /**
      * Display the specified resource.
+     * for end point get /student/id 
+     * returns the student details of spefic id
      */
     public function show(Student $student)
     {
         $this->authorize('view', $student);
-        return $student->load(['user', 'teacher']);
+        return response()->json($student);
     }
+
 
     /**
      * Show the form for editing the specified resource.
+     * Not used in api
      */
     public function edit(string $id)
     {
@@ -89,6 +98,8 @@ class StudentController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * for end ponts PUT PATCH /students
+     * returns updated students details
      */
     public function update(Request $request, Student $student)
     {
@@ -114,6 +125,8 @@ class StudentController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * for end point DELETE /student
+     * deletes the student and returns message
      */
     public function destroy(Student $student)
     {
@@ -122,18 +135,17 @@ class StudentController extends Controller
         return response()->json(['message' => 'Student deleted']);
     }
 
+    /**
+     * for end pont GET /student/profile
+     * returns the current logged in student details
+     */
     public function getProfile()
     {
         $user = Auth::user();
-
         if ($user->role !== 'student') {
             return response()->json(['message' => 'Forbidden'], 403);
         }
-
-        $student = Student::where('user_id', $user->id)
-            ->with(['user', 'teacher'])
-            ->first();
-
+        $student = Student::where('user_id', $user->id)->first();
         if (!$student) {
             return response()->json(['message' => 'Student record not found'], 404);
         }

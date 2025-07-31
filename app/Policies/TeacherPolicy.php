@@ -63,7 +63,8 @@ class TeacherPolicy
     {
         return false;
     }
-
+    
+    //only admin and and teacher whoes studnets are being acessed can only view assinged stuidents of spefic teachers
     public function viewStudents(User $user, Teacher $teacher)
     {
         return $user->role === 'admin' || $user->id === $teacher->user_id;

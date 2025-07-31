@@ -18,12 +18,14 @@ class Teacher extends Model
         "date_of_joining",
         "status"
     ];
-
+    
+    //Teacher belong to a user
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    //Teacher has many students
     public function students(){
         return $this->hasMany(Student::class);
     }
