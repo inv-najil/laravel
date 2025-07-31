@@ -13,6 +13,8 @@ class TeacherController extends Controller
     /**
      * 
      * Display a listing of the resource.
+     * for end point GET /teacher
+     * Returns Paginatted view of registed teachers
      */
     public function index()
     {
@@ -22,6 +24,7 @@ class TeacherController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * not used in api
      */
     public function create()
     {
@@ -30,6 +33,8 @@ class TeacherController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * for end point POST /teacher
+     * creates a new teacher record and returns the json
      */
     public function store(Request $request)
     {
@@ -69,14 +74,18 @@ class TeacherController extends Controller
 
     /**
      * Display the specified resource.
+     * for end ponit GET /teacher/id
+     * returns the teacher details of specific id
      */
     public function show(Teacher $teacher)
     {
         $this->authorize('view', $teacher);
+        return response()->json($teacher);
     }
 
     /**
      * Show the form for editing the specified resource.
+     * not used for api
      */
     public function edit(string $id)
     {
@@ -85,6 +94,8 @@ class TeacherController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * for end point PUT PATCH /teacher
+     * retruns the updated teacher json
      */
     public function update(Request $request, Teacher $teacher)
     {
@@ -109,6 +120,8 @@ class TeacherController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * for end pont DELTE /techer
+     * delets the teacher record
      */
     public function destroy(Teacher $teacher)
     {

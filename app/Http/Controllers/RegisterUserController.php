@@ -12,7 +12,14 @@ use Illuminate\Validation\ValidationException;
 use Exception;
 use Illuminate\Support\Facades\DB;
 class RegisterUserController extends Controller
-{
+{   
+    /**
+     * Summary of register
+     * regsiter users to user table spefic table using role field
+     * used db atomic transcation to solve the issue of partial creation
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register(Request $request)
     {
 
@@ -59,14 +66,15 @@ class RegisterUserController extends Controller
 
             $first_name = $request->input('first_name');
             $last_name = $request->input('last_name');
-
+            
+            //create user
             $user = User::create([
                 'name' => $first_name . ' ' . $last_name,
                 'email' => $validated['email'],
                 'password' => Hash::make($validated['password']),
                 'role' => $validated['role']
             ]);
-
+            //create teacher
             if ($validated['role'] === 'teacher') {
                 Teacher::create([
                     'user_id' => $user->id,
@@ -80,7 +88,7 @@ class RegisterUserController extends Controller
                     'status' => $request->status
                 ]);
             }
-
+            //create student
             if ($validated['role'] === 'student') {
                 Student::create([
                     'user_id' => $user->id,

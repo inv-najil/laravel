@@ -19,12 +19,14 @@ class Student extends Model
         'admission_date',
         'status'
     ];
-
+    
+    //student belongs to a user
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    //student belongs to a teacher
     public function teacher()
     {
         return $this->belongsTo(Teacher::class);
