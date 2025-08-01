@@ -44,3 +44,6 @@ Route::middleware('jwt.auth')->get('/teachers/{id}/students', function ($id) {
 //student view
 Route::middleware('jwt.auth')->get('/student/profile', [StudentController::class, 'getProfile']);
 
+//teacher view
+Route::middleware('jwt.auth')->get('/teacher/profile', [TeacherController::class, 'getprofile']);
+
