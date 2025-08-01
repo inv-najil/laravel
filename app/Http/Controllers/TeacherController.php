@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Teacher;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -129,4 +130,23 @@ class TeacherController extends Controller
         $teacher->user->delete();
         return response()->json(['message' => 'teacher deleted']);
     }
+
+    /**
+     * for end pont GET /teacher/profile
+     * returns the current logged in teacher details
+     */
+    public function getProfile()
+    {
+        $user = Auth::user();
+        if ($user->role !== 'student') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+        $teacher = Teacher::where('user_id', $user->id)->first();
+        if (!$teacher) {
+            return response()->json(['message' => 'Teacher record not found'], 404);
+        }
+
+        return response()->json($teacher, 200);
+    }
+
 }
