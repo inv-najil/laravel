@@ -142,14 +142,11 @@ class StudentController extends Controller
     public function getProfile()
     {
         $user = Auth::user();
-        if ($user->role !== 'student') {
-            return response()->json(['message' => 'Forbidden'], 403);
-        }
         $student = Student::where('user_id', $user->id)->first();
         if (!$student) {
             return response()->json(['message' => 'Student record not found'], 404);
         }
-
+        $this->authorize('view', $student);
         return response()->json($student);
     }
 

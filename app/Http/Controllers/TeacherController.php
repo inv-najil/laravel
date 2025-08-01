@@ -138,13 +138,11 @@ class TeacherController extends Controller
     public function getProfile()
     {
         $user = Auth::user();
-        if ($user->role !== 'teacher') {
-            return response()->json(['message' => 'Forbidden'], 403);
-        }
         $teacher = Teacher::where('user_id', $user->id)->first();
         if (!$teacher) {
             return response()->json(['message' => 'Teacher record not found'], 404);
         }
+        $this->authorize('view', $teacher);
 
         return response()->json($teacher, 200);
     }
