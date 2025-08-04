@@ -43,10 +43,14 @@ class AuthController extends Controller
      * log out user by invalidating current token
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout()
+    public function logout(Request $request)
     {
-        auth()->logout();
-        return response()->json(["message" => "Logged out successfully"]);
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return response()->json(['message' => 'Successfully logged out']);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Failed to logout, token invalid'], 500);
+        }
     }
 
     /**
