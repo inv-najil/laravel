@@ -108,7 +108,7 @@ class StudentController extends Controller
         $validated = $request->validate([
             'first_name' => 'sometimes|required|string|max:255',
             'last_name' => 'sometimes|required|string|max:255',
-            'phone' => 'sometimes|required|string|max:10',
+            'phone' => 'sometimes|required|regex:/^[0-9]{10}$/',
             'class_grade' => 'sometimes|required|string',
             'status' => 'sometimes|required|in:active,inactive',
         ]);

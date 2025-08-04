@@ -45,7 +45,7 @@ class TeacherController extends Controller
             'password' => 'required|string|confirmed|min:6',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:10',
+            'phone' => 'sometimes|required|regex:/^[0-9]{10}$/',
             'emp_id' => 'required|string|unique:teachers,emp_id',
             'subject_specialization' => 'required|string',
             'date_of_joining' => 'required|date',

@@ -47,3 +47,12 @@ Route::middleware('jwt.auth')->get('/student/profile', [StudentController::class
 //teacher view
 Route::middleware('jwt.auth')->get('/teacher/profile', [TeacherController::class, 'getprofile']);
 
+//number of teacher and students
+Route::middleware(['jwt.auth', 'admin'])->get('/admin/dashboard', function () {
+    $teachercount = Teacher::count();
+    $studentcount = Student::count();
+    return response()->json([
+        'teachers' => $teachercount,
+        'students' => $studentcount
+    ]);
+});

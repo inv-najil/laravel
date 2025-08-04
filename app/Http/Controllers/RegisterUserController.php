@@ -12,7 +12,7 @@ use Illuminate\Validation\ValidationException;
 use Exception;
 use Illuminate\Support\Facades\DB;
 class RegisterUserController extends Controller
-{   
+{
     /**
      * Summary of register
      * regsiter users to user table spefic table using role field
@@ -55,7 +55,7 @@ class RegisterUserController extends Controller
                     'first_name' => 'required|string|max:255',
                     'last_name' => 'required|string|max:255',
                     'teacher_id' => 'required|exists:teachers,id',
-                    'phone' => 'required|string|max:10',
+                    'phone' => 'required|regex:/^[0-9]{10}$/',
                     'roll_num' => 'required|string|unique:students,roll_num',
                     'dob' => 'required|date',
                     'admission_date' => 'required|date',
@@ -66,7 +66,7 @@ class RegisterUserController extends Controller
 
             $first_name = $request->input('first_name');
             $last_name = $request->input('last_name');
-            
+
             //create user
             $user = User::create([
                 'name' => $first_name . ' ' . $last_name,
