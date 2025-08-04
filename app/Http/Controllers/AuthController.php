@@ -9,7 +9,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
-{   
+{
 
     /**
      * Summary of login
@@ -30,13 +30,14 @@ class AuthController extends Controller
             }
             return response()->json([
                 'token' => $token,
-                'user' => auth()->user()
+                'user' => auth()->user(),
+                'role' => auth()->user()->role
             ]);
         } catch (JWTException $e) {
             return response()->json(['error' => 'Could not create token'], 500);
         }
     }
-    
+
     /**
      * Summary of logout
      * log out user by invalidating current token
@@ -47,7 +48,7 @@ class AuthController extends Controller
         auth()->logout();
         return response()->json(["message" => "Logged out successfully"]);
     }
-    
+
     /**
      * Summary of refresh
      * refresh token before access token expiries
