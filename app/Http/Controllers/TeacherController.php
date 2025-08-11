@@ -23,14 +23,7 @@ class TeacherController extends Controller
         return Teacher::paginate(10);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * not used in api
-     */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -82,15 +75,6 @@ class TeacherController extends Controller
     {
         $this->authorize('view', $teacher);
         return response()->json($teacher);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * not used for api
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**

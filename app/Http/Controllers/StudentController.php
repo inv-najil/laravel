@@ -20,16 +20,6 @@ class StudentController extends Controller
         $this->authorize('viewAny', Student::class);
         return Student::paginate(10);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     * Not used for api
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      * for endpoint post /students to create student
@@ -85,17 +75,6 @@ class StudentController extends Controller
         $this->authorize('view', $student);
         return response()->json($student);
     }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     * Not used in api
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      * for end ponts PUT PATCH /students
