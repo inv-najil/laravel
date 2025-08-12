@@ -25,28 +25,28 @@ class StudentPolicyTest extends TestCase
      */
 
     /**
-     * @test View admin
+     *  View admin
      */
-    public function admin_can_view_all_students()
+    public function test_admin_can_view_all_students()
     {
         $admin = User::factory()->create(['role' => 'admin']);
         $this->assertTrue($this->policy->viewAny($admin));
     }
     /**
-     * @test view student 
+     *  view student 
      * 
      */
-    public function student_can_view_thier_own()
+    public function test_student_can_view_thier_own()
     {
         $user = User::factory()->create(['role' => 'student']);
         $student = Student::factory()->create(['user_id' => $user->id]);
         $this->assertTrue($this->policy->view($user, $student));
     }
     /**
-     * @test view teacher
+     *  view teacher
      * 
      */
-    public function teacher_can_view_thier_students()
+    public function test_teacher_can_view_thier_students()
     {
         $user = User::factory()->create(['role' => 'teacher']);
         $teacher = Teacher::factory()->create(['user_id' => $user->id]);
@@ -54,9 +54,9 @@ class StudentPolicyTest extends TestCase
         $this->assertTrue($this->policy->view($user, $student));
     }
     /**
-     * @test other students cant view
+     *  other students cant view
      */
-    public function other_students_cant_view_students()
+    public function test_other_students_cant_view_students()
     {
         $user = User::factory()->create(['role' => 'student']);
         $student = Student::factory()->create();
@@ -68,9 +68,9 @@ class StudentPolicyTest extends TestCase
      */
 
     /**
-     * @test Only Admin  can create student
+     *  Only Admin  can create student
      */
-    public function admin_can_create_students()
+    public function test_admin_can_create_students()
     {
         $admin = User::factory()->create(['role' => 'admin']);
         $teacher = User::factory()->create(['role' => 'teacher']);
@@ -85,18 +85,18 @@ class StudentPolicyTest extends TestCase
      */
 
     /**
-     * @test admin can update all students
+     *  admin can update all students
      */
-    public function admin_can_update_all_students()
+    public function test_admin_can_update_all_students()
     {
         $admin = User::factory()->create(['role' => 'admin']);
         $student = Student::factory()->create();
         $this->assertTrue($this->policy->update($admin, $student));
     }
     /**
-     * @test teacher can update assigned students
+     *  teacher can update assigned students
      */
-    public function teacher_can_update_assigned_students()
+    public function test_teacher_can_update_assigned_students()
     {
         $user = User::factory()->create(['role' => 'teacher']);
         $teacher = Teacher::factory()->create(['user_id' => $user->id]);
@@ -104,9 +104,9 @@ class StudentPolicyTest extends TestCase
         $this->assertTrue($this->policy->update($user, $student));
     }
     /**
-     * @test teacher can not update unassigned students
+     *  teacher can not update unassigned students
      */
-    public function teacher_can_not_update_unassigned_students()
+    public function test_teacher_can_not_update_unassigned_students()
     {
         $user = User::factory()->create(['role' => 'teacher']);
         $teacher = Teacher::factory()->create(['user_id' => $user->id]);
@@ -117,9 +117,9 @@ class StudentPolicyTest extends TestCase
      * Student delete testing
      */
     /**
-     * @test admin can delete all the students
+     *  admin can delete all the students
      */
-    public function admin_can_delete_all_students()
+    public function test_admin_can_delete_all_students()
     {
         $admin = User::factory()->create(['role' => 'admin']);
         $student = Student::factory()->create();
@@ -127,9 +127,9 @@ class StudentPolicyTest extends TestCase
     }
 
     /**
-     * @test teacher can delete assigned students
+     *  teacher can delete assigned students
      */
-    public function teacher_can_delete_assigned_students()
+    public function test_teacher_can_delete_assigned_students()
     {
         $user = User::factory()->create(['role' => 'teacher']);
         $teacher = Teacher::factory()->create(['user_id' => $user->id]);
@@ -137,9 +137,9 @@ class StudentPolicyTest extends TestCase
         $this->assertTrue($this->policy->delete($user, $student));
     }
     /**
-     * @test student can not delete anyone
+     *  student can not delete anyone
      */
-    public function student_can_not_delete_anyone()
+    public function test_student_can_not_delete_anyone()
     {
         $user = User::factory()->create(['role' => 'student']);
         $student = Student::factory()->create();

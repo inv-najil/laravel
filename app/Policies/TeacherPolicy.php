@@ -27,7 +27,7 @@ class TeacherPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, Teacher $teacher): bool
     {
         return $user->role === 'admin';
     }
