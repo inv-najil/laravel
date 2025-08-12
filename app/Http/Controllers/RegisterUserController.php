@@ -45,7 +45,7 @@ class RegisterUserController extends Controller
                     'phone' => 'required|string|max:10',
                     'emp_id' => 'required|string|unique:teachers,emp_id',
                     'subject_specialization' => 'required|string',
-                    'date_of_joining' => 'required|date',
+                    'date_of_joining' => 'required|date|before_or_equal:today',
                     'status' => 'required|in:active,inactive'
                 ]);
             }
@@ -57,8 +57,8 @@ class RegisterUserController extends Controller
                     'teacher_id' => 'required|exists:teachers,id',
                     'phone' => 'required|regex:/^[0-9]{10}$/',
                     'roll_num' => 'required|string|unique:students,roll_num',
-                    'dob' => 'required|date',
-                    'admission_date' => 'required|date',
+                    'dob' => 'required|date|before:today',
+                    'admission_date' => 'required|date|after:dob|before_or_equal:today',
                     'class_grade' => 'required|string',
                     'status' => 'required|in:active,inactive'
                 ]);
