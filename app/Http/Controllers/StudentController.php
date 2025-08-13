@@ -35,8 +35,8 @@ class StudentController extends Controller
             'last_name' => 'required|string|max:255',
             'phone' => 'required|string|max:10',
             'roll_num' => 'required|string|unique:students',
-            'dob' => 'required|date',
-            'admission_date' => 'required|date',
+            'dob' => 'required|date|before:today',
+            'admission_date' => 'required|date|after:dob|before_or_equal:today',
             'class_grade' => 'required|string',
             'status' => 'required|in:active,inactive',
             'teacher_id' => 'required|exists:teachers,id'
@@ -101,7 +101,6 @@ class StudentController extends Controller
 
         return response()->json($student);
     }
-
     /**
      * Remove the specified resource from storage.
      * for end point DELETE /student
@@ -113,7 +112,6 @@ class StudentController extends Controller
         $student->user->delete();
         return response()->json(['message' => 'Student deleted']);
     }
-
     /**
      * for end pont GET /student/profile
      * returns the current logged in student details
