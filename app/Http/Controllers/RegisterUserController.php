@@ -121,10 +121,14 @@ class RegisterUserController extends Controller
                 'file' => $e->getFile()
             ]);
 
-            return response()->json([
-                'error' => 'Registration failed. Check logs.',
-                'message' => $e->getMessage()
-            ], 500);
+            if ($e instanceof ValidationException) {
+                return response()->json([
+                    'message' => 'The given data was invalid.',
+                    'errors' => $e->errors()
+                ], 422);
+            }
         }
+        return response()->json(['error' => 'Unexpected flow'], 500);
     }
+
 }
