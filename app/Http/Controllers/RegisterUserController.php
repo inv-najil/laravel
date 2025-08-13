@@ -128,5 +128,7 @@ class RegisterUserController extends Controller
                 ], 422);
             }
         }
+        return response()->json(['error' => 'Unexpected flow'], 500);
     }
+
 }
