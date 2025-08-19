@@ -147,4 +147,50 @@ class TeacherController extends Controller
         return response()->json($teacher, 200);
     }
 
+    /**
+     * For export Teacher details as csv
+     * Returns a CSV file
+     */
+    public function exportCSV()
+    {
+        $this->authorize('viewAny', Teacher::class);
+
+        $filename = "teachers.csv";
+
+        $teachers = Teacher::with('user')->get();
+
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-disposition" => "attachment; filename=$filename"
+        ];
+
+        $columns = [
+            "Id",
+            "First_name",
+            "Last_name",
+            "Email",
+            "Phone",
+            "Subject",
+            "Date_of_Joining"
+        ];
+
+        $callback = function () use ($columns, $teachers) {
+            $file = fopen("php://output", "w");
+            fputcsv($file, $columns);
+            foreach ($teachers as $teacher) {
+                fputcsv($file, [
+                    $teacher->id,
+                    $teacher->first_name,
+                    $teacher->last_name,
+                    $teacher->user->email ?? '',
+                    $teacher->phone,
+                    $teacher->subject_specialization,
+                    $teacher->date_of_joining
+                ]);
+            }
+            fclose($file);
+        };
+        return response()->stream($callback, 200, $headers);
+    }
+
 }

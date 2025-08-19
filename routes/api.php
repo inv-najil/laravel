@@ -59,3 +59,6 @@ Route::middleware(['jwt.auth', 'admin'])->get('/admin/dashboard', function () {
 
 //Export Student csv
 Route::middleware('jwt.auth')->get('/student/export', [StudentController::class, 'exportCSV']);
+
+//Export Teacher csv
+Route::middleware('jwt.auth')->get('/teacher/export', [TeacherController::class, 'exportCSV']);
