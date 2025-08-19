@@ -35,7 +35,7 @@ class StudentPolicy
      * Determine whether the user can create models.
      * admin is only allowd to create students
      */
-    public function create(User $user, Student $student): bool
+    public function create(User $user): bool
     {
         return $user->role === 'admin';
     }

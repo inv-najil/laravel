@@ -62,3 +62,6 @@ Route::middleware('jwt.auth')->get('/student/export', [StudentController::class,
 
 //Export Teacher csv
 Route::middleware('jwt.auth')->get('/teacher/export', [TeacherController::class, 'exportCSV']);
+
+//Import Student csv
+Route::middleware('jwt.auth')->post('/student/import',[StudentController::class,'importCSV']);
