@@ -127,4 +127,57 @@ class StudentController extends Controller
         return response()->json($student);
     }
 
+    /**
+     * For export student details as CSV
+     * Returns CSV of available students
+     */
+   public function exportCSV()
+{
+    $this->authorize('viewAny', Student::class);
+
+    $filename = 'students.csv';
+    $students = Student::with('user', 'teacher')->get();
+
+    $headers = [
+        "Content-type" => "text/csv",
+        "Content-Disposition" => "attachment; filename=$filename",
+    ];
+
+    $columns = [
+        "Id",
+        "Email",
+        "First name",
+        "Last name",
+        "Phone",
+        "Class",
+        "Admission Date",
+        "Date of Birth",
+        "Assigned Teacher",
+    ];
+
+    $callback = function () use ($students, $columns) {
+        $file = fopen("php://output", "w");
+        fputcsv($file, $columns);
+
+        foreach ($students as $student) {
+            fputcsv($file, [
+                $student->id,
+                $student->user->email ?? '',
+                $student->first_name,
+                $student->last_name,
+                $student->phone,
+                $student->class_grade,
+                $student->admission_date,
+                $student->dob,
+                $student->teacher ? $student->teacher->first_name . ' ' . $student->teacher->last_name : ''
+            ]);
+        }
+
+        fclose($file);
+    };
+
+    return response()->stream($callback, 200, $headers);
+}
+
+
 }

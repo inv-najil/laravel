@@ -56,3 +56,6 @@ Route::middleware(['jwt.auth', 'admin'])->get('/admin/dashboard', function () {
         'students' => $studentcount
     ]);
 });
+
+//Export Student csv
+Route::middleware('jwt.auth')->get('/student/export', [StudentController::class, 'exportCSV']);
