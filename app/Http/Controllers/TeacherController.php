@@ -170,6 +170,7 @@ class TeacherController extends Controller
             "Last_name",
             "Email",
             "Phone",
+            "EMP_num",
             "Subject",
             "Date_of_Joining"
         ];
@@ -184,6 +185,7 @@ class TeacherController extends Controller
                     $teacher->last_name,
                     $teacher->user->email ?? '',
                     $teacher->phone,
+                    $teacher->emp_id,
                     $teacher->subject_specialization,
                     $teacher->date_of_joining
                 ]);

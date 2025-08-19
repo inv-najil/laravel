@@ -60,6 +60,7 @@ class StudentController extends Controller
             'admission_date' => $validated['admission_date'],
             'class_grade' => $validated['class_grade'],
             'status' => $validated['status'],
+            'email' => $user->email
         ]);
 
         return response()->json($student, 201);
@@ -150,6 +151,7 @@ class StudentController extends Controller
             "Last_name",
             "Phone",
             "Class",
+            "Roll_Num",
             "Admission_Date",
             "Date_of_Birth",
             "Assigned_Teacher",
@@ -165,6 +167,7 @@ class StudentController extends Controller
                     $student->last_name,
                     $student->phone,
                     $student->class_grade,
+                    $student->roll_num,
                     $student->admission_date,
                     $student->dob,
                     $student->teacher ? $student->teacher->first_name . ' ' . $student->teacher->last_name : ''
