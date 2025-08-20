@@ -14,13 +14,13 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class StudentsImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnFailure
 {
-
+    use SkipsFailures;
     /**
      * @param array $row
      * creating user and linked students from csv
      * 
      */
-    use SkipsFailures;
+
     public function model(array $row)
     {
         $user = User::create([
@@ -68,6 +68,7 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
             'teacher_id' => 'required|exists:teachers,id',
         ];
     }
+
 
     /**
      * Custom Validation Messages for unique email,roll
