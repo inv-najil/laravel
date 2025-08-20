@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\StudentsImport;
 use App\Models\Student;
 use App\Models\User;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class StudentController extends Controller
 {
@@ -176,5 +179,25 @@ class StudentController extends Controller
             fclose($file);
         };
         return response()->stream($callback, 200, $headers);
+    }
+    /**
+     * Function to import students from csv
+     */
+    public function importCSV(Request $request)
+    {
+
+        $request->validate([
+            'file' => 'required|mimes:csv,txt,xlsx,xls'
+        ]);
+
+        $import = new StudentsImport;
+
+        Excel::import($import, $request->file('file'));
+
+
+        return response()->json([
+            'message' => 'Students import completed',
+            'failures' => $import->failures(), 
+        ]);
     }
 }
