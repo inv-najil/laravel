@@ -62,7 +62,7 @@ class TeacherImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnF
         ];
     }
 
-    public function customValidationMessage()
+    public function customValidationMessages()
     {
         return [
             'email.unique' => 'This email already exists in the system',

@@ -73,7 +73,7 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
     /**
      * Custom Validation Messages for unique email,roll
      */
-    public function customValidationMessage()
+    public function customValidationMessages()
     {
         return [
             'email.unique' => 'This email already exists in the system',
